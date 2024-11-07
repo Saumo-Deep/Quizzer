@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login/Signup Page</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+     <style>
+        /* style.css */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 320px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3e8e41;
+}
+     </style>
+</head>
+<body>
+    <div class="container">
+        <div id="login-form">
+            <h2>Login</h2>
+            <input type="text" id="login-username" placeholder="Username">
+            <input type="password" id="login-password" placeholder="Password">
+            <button onclick="login()">Login</button>
+        </div>
+        <div id="signup-form" style="display: none;">
+            <h2>Signup</h2>
+            <input type="text" id="signup-username" placeholder="Username">
+            <input type="password" id="signup-password" placeholder="Password">
+            <button onclick="signup()">Signup</button>
+        </div>
+        <button onclick="toggleForm()">Sign Up</button>
+    </div>
+    <!-- <script src="script.js"></script> -->
+     <script>
+        function toggleForm() {
+    const loginForm = document.getElementById("login-form");
+    const signupForm = document.getElementById("signup-form");
+    loginForm.style.display = loginForm.style.display === "none" ? "block" : "none";
+    signupForm.style.display = signupForm.style.display === "none" ? "block" : "none";
+}
+
+function login() {
+    const username = document.getElementById("login-username").value;
+    const password = document.getElementById("login-password").value;
+
+    // Check if the user exists in local storage
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const user = users.find(u => u.username === username && u.password === password);
+
+    if (user) {
+        alert("Login successful!");
+        // Redirect to a dashboard or other page
+        window.location.href = "ok.html"; // Replace with your desired URL
+    } else {
+        alert("Invalid username or password.");
+    }
+}
+
+function signup() {
+    const username = document.getElementById("signup-username").value;
+    const password = document.getElementById("signup-password").value;
+
+    // Check if the username already exists
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    if (users.some(u => u.username === username)) {
+        alert("Username already exists.");
+        return;
+    }
+
+    // Store the user in local storage
+    users.push({ username, password });
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Signup successful!");
+    toggleForm(); // Switch back to login form
+}
+     </script>
+</body>
+</html>
